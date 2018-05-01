@@ -13,8 +13,9 @@ import java.util.Map;
 
 public class View extends Group {
 
-    private final Menu menu;
-    private final Automat model;
+    private Menu menu;
+    DrinksBtnArray drinksButtonsArr;
+    private Automat model;
 
 
 
@@ -43,6 +44,7 @@ public class View extends Group {
 
     public View(Menu menu, Automat automat) {
         this.menu = menu;
+        this.drinksButtonsArr = new DrinksBtnArray(menu);
         this.model = automat;
         layoutForm();
         bindFieldsToModel();
@@ -64,7 +66,6 @@ public class View extends Group {
         hBox.getChildren().add(rub5);
         hBox.getChildren().add(rub10);
 
-
         moneyMessage.setLayoutX(5);
         moneyMessage.setLayoutY(120);
         moneyMessage.setPrefSize(120, 20);
@@ -74,7 +75,6 @@ public class View extends Group {
         moneyMessage.setCursor(Cursor.WAIT);
         moneyMessage.editableProperty().setValue(false);
 
-
         textMessage.setLayoutX(120);
         textMessage.setLayoutY(120);
         textMessage.setPrefSize(360, 40);
@@ -82,60 +82,46 @@ public class View extends Group {
         textMessage.setCursor(Cursor.WAIT);
         textMessage.editableProperty().setValue(false);
 
-
         progressBar.setLayoutX(5);
         progressBar.setLayoutY(175);
         progressBar.setPrefSize(480, 25);
         progressBar.setCursor(Cursor.WAIT);
         progressBar.setVisible(true);
-
-
-        ArrayList<ChoiseButton> choiseButtonsArr = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : menu.entrySet()) {
-            choiseButtonsArr.add(new ChoiseButton(entry.getKey(), entry.getValue()));
-        }
+        
 
         drinksPane.setLayoutX(5);
         drinksPane.setLayoutY(205);
 
-        int column = 0;
-        int row = 0;
-
-        for (ChoiseButton btn : choiseButtonsArr) {
-
-            btn.setPrefSize(160, 50);
-            btn.setCursor(Cursor.HAND);
-            btn.setText(btn.getDrinkName() + "\n" + btn.getPrice());
-            btn.setOnAction(event -> {
-                try {
-                    model.cook(btn.getPrice());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        {
+            int column = 0;
+            int row = 0;
+            for (DrinkButton btn : drinksButtonsArr) {
+                btn.setPrefSize(160, 50);
+                btn.setCursor(Cursor.HAND);
+                btn.setText(btn.getDrinkName() + "\n" + btn.getPrice());
+                drinksPane.add(btn, column, row);
+                column++;
+                if (column == 3) {
+                    column = 0;
+                    row++;
                 }
-            });
-            drinksPane.add(btn, column, row);
-            column++;
-            if (column == 3) {
-                column = 0;
-                row++;
             }
 
+            progressButton.setPrefHeight(50);
+            progressButton.setPrefWidth(160);
+            progressButton.setFont(Font.font(10));
+            progressButton.setCursor(Cursor.HAND);
+            progressButton.setText("Progress");
+            drinksPane.add(progressButton, 2, 1);
 
+            cancelButton.setPrefHeight(50);
+            cancelButton.setPrefWidth(480);
+            cancelButton.setFont(Font.font(15));
+            cancelButton.setCursor(Cursor.HAND);
+            cancelButton.setText("Завершение");
+            drinksPane.add(cancelButton, 0, row + 1, 3, 1);
         }
 
-        progressButton.setPrefHeight(50);
-        progressButton.setPrefWidth(160);
-        progressButton.setFont(Font.font(10));
-        progressButton.setCursor(Cursor.HAND);
-        progressButton.setText("Progress");
-        drinksPane.add(progressButton, 2, 1);
-
-        cancelButton.setPrefHeight(50);
-        cancelButton.setPrefWidth(480);
-        cancelButton.setFont(Font.font(15));
-        cancelButton.setCursor(Cursor.HAND);
-        cancelButton.setText("Завершение");
-        drinksPane.add(cancelButton, 0, row + 1, 3, 1);
 
 
         this.getChildren().add(hBox);

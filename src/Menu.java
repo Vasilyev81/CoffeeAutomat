@@ -11,7 +11,6 @@ public final class Menu extends HashMap<String, Integer> {
 
     public Menu() {
         readData();
-        toString();
     }
 
 

@@ -1,10 +1,12 @@
 import javafx.scene.control.Button;
 
-class ChoiseButton extends Button {
+import java.util.function.BiConsumer;
+
+class DrinkButton extends Button {
     String drinkName;
     int price;
 
-    public ChoiseButton(String d, int p) {
+    public DrinkButton(String d, int p) {
         super();
         this.drinkName = d;
         this.price = p;

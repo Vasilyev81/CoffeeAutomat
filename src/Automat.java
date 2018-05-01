@@ -9,12 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public final class Automat implements Runnable{
+public final class Automat implements Runnable {
     private final IntegerProperty account = new SimpleIntegerProperty(this, "accountValue", 0);
     private final StringProperty message = new SimpleStringProperty(this, "textMessage", "");
     private final DoubleProperty progress = new SimpleDoubleProperty(this, "progressValue", 0.00);
     private final Menu menu;
     private int minPrice;
+    private Choise choise;
 
     private STATES State;
 
@@ -31,6 +32,7 @@ public final class Automat implements Runnable{
         this.message.set("");
         this.State = STATES.LOW_MONEY;
         this.progress.setValue(0.00);
+        this.choise = new Choise();
     }
 
 
@@ -56,7 +58,7 @@ public final class Automat implements Runnable{
 //                        break;
 //                    } else if (temp.equals("2"))
 //                    {
-//                        automat.coin(0);
+//                        automat.depositAccount(0);
 //                        break;
 //                    } else if (temp.equals("3"))
 //                    {
@@ -66,13 +68,13 @@ public final class Automat implements Runnable{
 //                    }
                 }
                 case CHECK: {
-                    if (automat.check(btn.getDrinkName()) == false)
+                    /*if (automat.check(btn.getDrinkName()) == false)
                     {
                         automat.sendToDisplay("\nНедостаточно денежных средств. Внести дополнительные денежные средства(1) или отменить сеанс(2)?");
                         String temp = reader.readLine();
                         if (temp.equals("1"))
                         {
-                            automat.coin(0);
+                            automat.depositAccount(0);
                             break;
                         } else if (temp.equals("2"))
                         {
@@ -87,7 +89,8 @@ public final class Automat implements Runnable{
                     }*/
                 }
                 case COOK: {
-                        cook(10);
+                    try {
+                        check(choise.price);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -112,14 +115,14 @@ public final class Automat implements Runnable{
     // Searching smallest price
     private int findMinPrice() {
         menu.forEach((key, value) -> {
-            int p = (int) value;
+            int p = value;
             if (p < minPrice) minPrice = p;
         });
         return minPrice;
     }
 
     //занесение денег на счёт пользователем
-    public void coin(int cash) {
+    public void depositAccount(int cash) {
         setMessage("Введите наличные");
         account.set(account.get() + cash);
         setMessage("Денежные средства: " + account.get());
@@ -129,6 +132,13 @@ public final class Automat implements Runnable{
     //Работаем с дисплеем
     public String getMessage() {
         return message.toString();
+    }
+
+    // set Choice
+    public void setChoise(String drinkName, Integer price) {
+        choise.setDrinkName(drinkName);
+        choise.setPrice(price);
+        System.out.println(choise.toString());
     }
 
     //проверка наличия необходимой суммы
@@ -149,8 +159,9 @@ public final class Automat implements Runnable{
         account.set(account.get() - price);
         latency(400);
         double timer;
-        for (int i = 0; i < 1000; i++){ latency(5);
-            timer =+ 0.001;
+        for (int i = 0; i < 1000; i++) {
+            latency(5);
+            timer = +0.001;
             setProgress(timer);
         }
         setMessage("Ваш напиток готов!");
@@ -206,7 +217,7 @@ public final class Automat implements Runnable{
 
     /*progresValue property*/
 
-    public final DoubleProperty progressProperty () {
+    public final DoubleProperty progressProperty() {
         return progress;
     }
 

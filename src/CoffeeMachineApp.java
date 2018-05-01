@@ -17,8 +17,10 @@ public class CoffeeMachineApp extends Application {
         Menu menu = new Menu();
         Automat model = new Automat(menu);
 
+/*
         Thread modelTrd = new Thread(model);
         modelTrd.start();
+*/
 
         View view = new View(menu, model);
         view.setStyle("-fx-padding: 10;" +
@@ -29,8 +31,10 @@ public class CoffeeMachineApp extends Application {
         Scene scene = new Scene(view);
         Presenter presenter = new Presenter(model, view);
 
+/*
         Thread presenterTrd = new Thread(presenter);
         presenterTrd.start();
+*/
 
         stage.setScene(scene);
         stage.setTitle("Coffee Machine");
