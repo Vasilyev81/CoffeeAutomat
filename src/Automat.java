@@ -1,27 +1,24 @@
 import javafx.beans.property.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.ParseException;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 
-import java.io.*;
 import java.util.HashMap;
-import java.util.Map;
 
 
-public final class Automat implements Runnable {
+public final class Automat extends Task<ObservableList<Long>> {
     private final IntegerProperty account = new SimpleIntegerProperty(this, "accountValue", 0);
     private final StringProperty message = new SimpleStringProperty(this, "textMessage", "");
     private final DoubleProperty progress = new SimpleDoubleProperty(this, "progressValue", 0.00);
     private final Menu menu;
     private int minPrice;
-    private Choise choise;
+    private boolean enoughMoney;
+    private Choice choice;
 
     private STATES State;
 
 
     enum STATES {
-        LOW_MONEY, ACCEPT, CHECK, COOK
+        STANDBY, COOK, FINISH
     }
 
 
@@ -29,82 +26,47 @@ public final class Automat implements Runnable {
         this.account.set(0);
         this.menu = menu;
         this.minPrice = findMinPrice();
+        this.enoughMoney = false;
         this.message.set("");
-        this.State = STATES.LOW_MONEY;
+        this.State = STATES.STANDBY;
         this.progress.setValue(0.00);
-        this.choise = new Choise();
+        this.choice = new Choice();
     }
 
 
     /*Domain specific business rules*/
-    @Override
+    //@Override
     public void run() {
         while (true) {
             switch (State) {
-                case LOW_MONEY: {
-                    while (account.get() < minPrice) {
-                        setMessage("Внесите денежные средства");
-                    }
+                case STANDBY: {
                     setMessage("Выберите напиток");
-                }
-                case ACCEPT: {
-                    setMessage("\nВыбрать напиток(1), добавить денежные средства(2) или отменить сеанс(3)?");
-                    //String temp = reader.readLine();
-//                    if (temp.equals("1"))
-//                    {
-//                        automat.prinMenu();
-//                        automat.choice();
-//                        automat.State = Automata.STATES.CHECK;
-//                        break;
-//                    } else if (temp.equals("2"))
-//                    {
-//                        automat.depositAccount(0);
-//                        break;
-//                    } else if (temp.equals("3"))
-//                    {
-//                        automat.cancel();
-//                        automat.State = Automata.STATES.WAIT;
-//                        break;
-//                    }
-                }
-                case CHECK: {
-                    /*if (automat.check(btn.getDrinkName()) == false)
-                    {
-                        automat.sendToDisplay("\nНедостаточно денежных средств. Внести дополнительные денежные средства(1) или отменить сеанс(2)?");
-                        String temp = reader.readLine();
-                        if (temp.equals("1"))
-                        {
-                            automat.depositAccount(0);
-                            break;
-                        } else if (temp.equals("2"))
-                        {
-                            automat.cancel();
-                            automat.State = Automata.STATES.WAIT;
-                            break;
-                        }
-                    } else if (automat.check(btn.getDrinkName()))
-                    {
-                        automat.State = Automata.STATES.COOK;
-                        break;
-                    }*/
+                    break;
                 }
                 case COOK: {
-                    try {
-                        check(choise.price);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    finish();
-                    //automat.State = Automata.STATES.WAIT;
+                    if (check(choice)) {
+                        cook(choice);
+                        setState(STATES.FINISH);
+                    } else setState(STATES.STANDBY);
                     break;
+                }
+                case FINISH: {
+
+
                 }
             }
         }
     }
 
 
-    public STATES getState() {
-        return State;
+    @Override
+    protected ObservableList<Long> call() throws Exception {
+        return null;
+    }
+
+
+    public void setState(STATES State) {
+        this.State = State;
     }
 
 
@@ -123,28 +85,30 @@ public final class Automat implements Runnable {
 
     //занесение денег на счёт пользователем
     public void depositAccount(int cash) {
-        setMessage("Введите наличные");
         account.set(account.get() + cash);
         setMessage("Денежные средства: " + account.get());
-        State = STATES.ACCEPT;
     }
 
     //Работаем с дисплеем
-    public String getMessage() {
-        return message.toString();
-    }
 
     // set Choice
-    public void setChoise(String drinkName, Integer price) {
-        choise.setDrinkName(drinkName);
-        choise.setPrice(price);
-        System.out.println(choise.toString());
+    public void setChoice(String drinkName, Integer price) {
+        choice.setName(drinkName);
+        choice.setPrice(price);
+        System.out.println(choice.toString());
     }
 
     //проверка наличия необходимой суммы
-    public void check(int price) throws InterruptedException {
-        if (account.get() < price) setMessage("Недостаточно денег для оплаты выбранного напитка");
-        else cook(price);
+    public boolean check(Choice choice) {
+        if (choice.price < account.get())
+            return true;
+
+        else {
+            setMessage("Стоимость выбранного напитка " + choice.price + "p.");
+            choice.nullifyChoice();
+            setState(STATES.STANDBY);
+            return false;
+        }
     }
 
     //отмена сеанса обслуживания пользователем
@@ -154,9 +118,10 @@ public final class Automat implements Runnable {
     }
 
     //имитация процесса приготовления напитка
-    public void cook(int price) throws InterruptedException {
+    public void cook(Choice choice) {
+
+        int cookingTime = choice.price * 10;
         setMessage("Идёт приготовление напитка!");
-        account.set(account.get() - price);
         latency(400);
         double timer;
         for (int i = 0; i < 1000; i++) {
@@ -197,13 +162,6 @@ public final class Automat implements Runnable {
         return message.get();
     }
 
-    public final void setMessage(String message) {
-        messageProperty().set(message);
-    }
-
-    public final StringProperty messageProperty() {
-        return message;
-    }
 
 
     /*accountValue property*/
@@ -216,10 +174,5 @@ public final class Automat implements Runnable {
     }
 
     /*progresValue property*/
-
-    public final DoubleProperty progressProperty() {
-        return progress;
-    }
-
 }
 

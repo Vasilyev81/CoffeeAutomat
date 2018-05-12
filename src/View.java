@@ -134,6 +134,8 @@ public class View extends Group {
     private void bindFieldsToModel() {
         textMessage.textProperty().bind(model.messageProperty());
         moneyMessage.textProperty().bind(model.accountProperty().asString());
+        //maybe unbinding is not necessary
+        progressBar.progressProperty().unbind();
         progressBar.progressProperty().bind(model.progressProperty());
     }
 

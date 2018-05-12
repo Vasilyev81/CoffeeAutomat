@@ -1,18 +1,18 @@
-public class Choise {
+public final class Choice {
     public String drinkName;
     public Integer price;
 
-    public Choise() {
+    public Choice() {
         this.drinkName = "";
         this.price = 0;
     }
 
-    public Choise(String drinkName, Integer price) {
+    public Choice(String drinkName, Integer price) {
         this.drinkName = drinkName;
         this.price = price;
     }
 
-    public void setDrinkName(String drinkName) {
+    public void setName(String drinkName) {
         this.drinkName = drinkName;
     }
 
@@ -20,9 +20,14 @@ public class Choise {
         this.price = price;
     }
 
+    public void nullifyChoice(){
+        this.drinkName = "";
+        this.price = 0;
+    }
+
     @Override
     public String toString() {
-        return "Choise{" +
+        return "Choice{" +
                 "drinkName='" + drinkName + '\'' +
                 ", price=" + price +
                 '}';
