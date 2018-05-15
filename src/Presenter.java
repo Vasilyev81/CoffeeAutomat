@@ -14,8 +14,10 @@ public class Presenter implements Runnable {
         view.rub5.setOnAction(e -> model.depositAccount(5));
         view.rub10.setOnAction(e -> model.depositAccount(10));
         for (DrinkButton choiceBtn : view.drinksButtonsArr) {
-            choiceBtn.setOnAction(e -> model.setChoice(choiceBtn.getDrinkName(), choiceBtn.getPrice()));
-            choiceBtn.setOnAction(e -> model.setState(Automat.STATES.COOK));
+            choiceBtn.setOnAction(event -> {
+                model.setChoice(choiceBtn.getDrinkName(), choiceBtn.getPrice());
+                model.setState(Automat.STATES.COOK);
+            });
         }
         view.cancelButton.setOnAction(e -> model.cancel());
     }

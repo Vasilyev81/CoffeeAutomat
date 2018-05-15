@@ -2,23 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dc965a7-7193-492a-92e3-94974cb230b1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/CoffeeAutomat/10ru.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/CoffeeAutomat/1ru.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/CoffeeAutomat/2ru.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/CoffeeAutomat/5ru.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/CoffeeAutomat/Java.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/CoffeeAutomat/menu.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/project-template.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project-template.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoffeeAutomat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CoffeeAutomat.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Automat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Automat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Choise.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Choice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CoffeeMachineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CoffeeMachineApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Presenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presenter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -97,10 +88,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Automat.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Automat.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Automat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
+            <state relative-caret-position="-480">
               <caret line="7" column="36" lean-forward="true" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -112,7 +103,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Task.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Task.java" pinned="false" current-in-tab="false">
         <entry file="jar:///usr/lib/jvm/java-8-oracle/javafx-src.zip!/javafx/concurrent/Task.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-4518">
@@ -204,9 +195,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="24" />
-    <option name="width" value="960" />
-    <option name="height" value="1056" />
+    <option name="y" value="-4" />
+    <option name="width" value="1920" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -310,7 +301,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525186924921</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Automat now is a Task">
+      <created>1526139252361</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1526139252361</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -324,6 +322,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1920" height="1084" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32976446" />
@@ -390,7 +389,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="Automat now is a Task" />
+    <option name="LAST_COMMIT_MESSAGE" value="Automat now is a Task" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -778,9 +778,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/javafx-src.zip!/javafx/concurrent/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4518">
+          <caret line="703" column="32" lean-forward="true" selection-start-line="703" selection-start-column="32" selection-end-line="703" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Automat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
+        <state relative-caret-position="-480">
           <caret line="7" column="36" lean-forward="true" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -788,13 +795,6 @@
             <element signature="method#depositAccount#0;class#Automat#0" />
             <element signature="method#latency#0;class#Automat#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/javafx-src.zip!/javafx/concurrent/Task.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4518">
-          <caret line="703" column="32" lean-forward="true" selection-start-line="703" selection-start-column="32" selection-end-line="703" selection-end-column="32" />
         </state>
       </provider>
     </entry>
