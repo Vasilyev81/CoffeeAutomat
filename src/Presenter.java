@@ -1,9 +1,11 @@
-public class Presenter implements Runnable {
-    private final Automat model;
+import javafx.concurrent.Service;
+
+public class Presenter {
+    private final Service model;
     private final View view;
 
-    public Presenter(Automat automat, View view) {
-        this.model = automat;
+    public Presenter(Service automate, View view) {
+        model = automate;
         this.view = view;
         attachEvents();
     }

@@ -1,77 +1,56 @@
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
 
-public final class Automat extends Task<ObservableList<Long>> {
-    private final IntegerProperty account = new SimpleIntegerProperty(this, "accountValue", 0);
-    private final StringProperty message = new SimpleStringProperty(this, "textMessage", "");
-    private final DoubleProperty progress = new SimpleDoubleProperty(this, "progressValue", 0.00);
+public class Automat extends Task<ObservableList<Long>> {
+
     private final Menu menu;
+    private int account;
     private int minPrice;
     private boolean enoughMoney;
     private Choice choice;
+    //private STATES State;
+    //TODO: Migrate to the Tasks states
 
-    private STATES State;
 
 
-    enum STATES {
-        STANDBY, COOK, FINISH
-    }
+    //enum STATES {WAIT, COOK, FINISH, CANCEL};
+
+
 
 
     public Automat(Menu menu) {
-        this.account.set(0);
+        account = 0;
         this.menu = menu;
-        this.minPrice = findMinPrice();
-        this.enoughMoney = false;
-        this.message.set("");
-        this.State = STATES.STANDBY;
-        this.progress.setValue(0.00);
-        this.choice = new Choice();
+        minPrice = findMinPrice();
+        enoughMoney = false;
+        choice = new Choice();
+        //State = STATES.WAIT;
+
+    }
+
+    //занесение денег на счёт пользователем
+    public void depositAccount(int cash) {
+        account+=cash;
+        setMessage("Денежные средства: " + account);
     }
 
 
-    /*Domain specific business rules*/
-    //@Override
-    public void run() {
-        while (true) {
-            switch (State) {
-                case STANDBY: {
-                    setMessage("Выберите напиток");
-                    break;
-                }
-                case COOK: {
-                    if (check(choice)) {
-                        cook(choice);
-                        setState(STATES.FINISH);
-                    } else setState(STATES.STANDBY);
-                    break;
-                }
-                case FINISH: {
-
-
-                }
-            }
-        }
-    }
 
 
     @Override
     protected ObservableList<Long> call() throws Exception {
-        return null;
-    }
+        //represent the results and state
+        final ObservableList<Long> result = FXCollections.observableArrayList();
 
+        //
 
-    public void setState(STATES State) {
-        this.State = State;
-    }
-
-
-    public HashMap<String, Integer> getMenu() {
-        return this.menu;
+        return result;
     }
 
     // Searching smallest price
@@ -83,11 +62,7 @@ public final class Automat extends Task<ObservableList<Long>> {
         return minPrice;
     }
 
-    //занесение денег на счёт пользователем
-    public void depositAccount(int cash) {
-        account.set(account.get() + cash);
-        setMessage("Денежные средства: " + account.get());
-    }
+
 
     //Работаем с дисплеем
 
@@ -112,9 +87,10 @@ public final class Automat extends Task<ObservableList<Long>> {
     }
 
     //отмена сеанса обслуживания пользователем
-    public void cancel() {
-        setMessage("Отмена сеанса обслуживания, возврат денежных средств: " + account.get());
+    public boolean cancel() {
+        this.updateMessage("Отмена сеанса обслуживания, возврат денежных средств: " + account);
         account.set(0);
+        return true;
     }
 
     //имитация процесса приготовления напитка

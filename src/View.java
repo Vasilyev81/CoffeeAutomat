@@ -1,3 +1,4 @@
+import javafx.concurrent.Service;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -8,14 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class View extends Group {
 
     private Menu menu;
     DrinksBtnArray drinksButtonsArr;
-    private Automat model;
+    private Service model;
 
 
 
@@ -42,10 +41,10 @@ public class View extends Group {
     Button cancelButton = new Button();
 
 
-    public View(Menu menu, Automat automat) {
+    public View(Menu menu, Service service) {
         this.menu = menu;
-        this.drinksButtonsArr = new DrinksBtnArray(menu);
-        this.model = automat;
+        drinksButtonsArr = new DrinksBtnArray(menu);
+        model = service;
         layoutForm();
         bindFieldsToModel();
     }
@@ -133,7 +132,7 @@ public class View extends Group {
 
     private void bindFieldsToModel() {
         textMessage.textProperty().bind(model.messageProperty());
-        moneyMessage.textProperty().bind(model.accountProperty().asString());
+        moneyMessage.textProperty().bind(model.valueProperty().asString());
         //maybe unbinding is not necessary
         progressBar.progressProperty().unbind();
         progressBar.progressProperty().bind(model.progressProperty());
